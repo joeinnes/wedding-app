@@ -25,8 +25,20 @@ module.exports = {
       console.error(e)
     }
   },
+  
+  async getUserById(id) {
+    try {
+      return await helpers.getUserById(id)
+    } catch (e) {
+      console.error(e)
+    }
+  },
 
-  async setRsvp(userId, rsvp) {
+  async setRsvp(userId, rsvp, currUser) {
+    const user = await helpers.getUserById(userId)
+    if (userId !== user._id && currUser["Plus Ones"].includes(userId)) {
+      throw 'You are not authorised to set an RSVP for this user.'
+    }
     try {
       const payload = {
         RSVP: rsvp,

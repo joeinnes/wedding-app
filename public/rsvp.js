@@ -1,10 +1,10 @@
-document.querySelector("#submit-rsvp").addEventListener("click", (e) => {
-  const resp = document.querySelector("input[name=rsvp]:checked").id
-  if (resp === 'rsvp-yes') {
-    window.location.href = "/rsvp/yes"
-  } else if (resp === 'rsvp-no') {
-    window.location.href = "/rsvp/no"
-  } else {
-    alert("Please pick an option!")
+document.querySelector("#submit-rsvp").addEventListener("click", e => {
+  const formData = new FormData(document.querySelector("#rsvp-form"))
+  for (var pair of formData.entries()) {
+    console.log(pair[0] + ", " + pair[1])
   }
+  fetch('/rsvp', {
+    method: 'POST',
+    body: formData
+  })
 })

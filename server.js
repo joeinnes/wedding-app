@@ -9,6 +9,8 @@ const SQLiteStore = require("connect-sqlite3")(session)
 const cookieParser = require("cookie-parser")
 const bodyParser = require("body-parser")
 const UserController = require("./controllers/UserController.js")
+const multer = require("multer")
+const upload = multer()
 
 // we've started you off with Express,
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
@@ -46,16 +48,40 @@ app.use(async function(req, res, next) {
       user.Token
     )
     // Make current user available in PUG even if not manually passed
-    res.locals.user = user
+    res.locals.user = req.session.user
     if (!tokenValid) {
       return res.redirect("/logout")
     }
   }
   req.session.lang = user ? user.Language || "en" : "en"
-  res.locals = {...res.locals, ...require('./i18n/translations.js')[req.session.lang]}
+  res.locals = {
+    ...res.locals,
+    ...require("./i18n/translations.js")[req.session.lang]
+  }
   next()
 })
 
+app.use(async function(req, res, next) {
+  if (!req.session.user) {
+    next()
+  }
+  const userId = req.session.user._id
+  const user = await UserController.getUserById(userId)
+  const plusOnes = Promise.all(
+    user["Plus Ones"].map(async plusOne => {
+      const plusOneDetails = await UserController.getUserById(plusOne)
+      return {
+        Name: plusOneDetails.Name,
+        RSVP: plusOneDetails.RSVP,
+        RSVPResponded: plusOneDetails.RSVPResponded,
+        _id: plusOneDetails._id
+      }
+    })
+  )
+  req.session.user = user
+  req.session.user.plusOnes = await plusOnes
+  next()
+})
 
 // Make some environment variables available in the REQ object
 app.locals.env = {
@@ -104,7 +130,19 @@ app.get("/login/:token", async (req, res) => {
   const tokenValid = await UserController.validateToken(email, token)
   if (tokenValid) {
     const user = await UserController.getUserByEmail(email)
+    const plusOnes = Promise.all(
+      user["Plus Ones"].map(async plusOne => {
+        const plusOneDetails = await UserController.getUserById(plusOne)
+        return {
+          Name: plusOneDetails.Name,
+          RSVP: plusOneDetails.RSVP,
+          RSVPResponded: plusOneDetails.RSVPResponded,
+          _id: plusOneDetails._id
+        }
+      })
+    )
     req.session.user = user
+    req.session.user.plusOnes = await plusOnes
     res.redirect("/")
   } else {
     res.render("error", { error: "This link has expired!" })
@@ -127,27 +165,27 @@ app.get("/send-token", async (req, res) => {
   }
 })
 
-app.get("/rsvp/:resp", async (req, res) => {
+app.post("/rsvp", upload.none(), async (req, res) => {
   try {
+    const rsvpsToProcess = req.body
     const user = req.session.user
-    const resp = req.params.resp
-    if (resp === "yes") {
-      await UserController.setRsvp(user._id, true)
-      req.session.user.RSVP = true
-      req.session.user.RSVPResponded = true
-      res.render("rsvp", { yes: true })
-    } else if (resp === "no") {
-      await UserController.setRsvp(user._id, false)
-      req.session.user.RSVP = false
-      req.session.user.RSVPResponded = true
-      res.render("rsvp")
-    } else {
-      res.render("error", {
-        error: "You can only pick yes or no for your RSVP"
-      })
+
+    for (let rsvp in rsvpsToProcess) {
+      const id = rsvp
+      const response = rsvpsToProcess[id]
+      if (response === "rsvp-yes") {
+        await UserController.setRsvp(rsvp, true, user)
+      } else if (response === "rsvp-no") {
+        await UserController.setRsvp(rsvp, false, user)
+      } else {
+        throw "You can only pick yes or no for your RSVP"
+      }
     }
   } catch (e) {
-    res.redirect("/")
+    console.error(e)
+    res.render("error", {
+      error: e
+    })
   }
 })
 
@@ -161,14 +199,16 @@ app.get("/guests", async (req, res) => {
       return
     }
     const guestList = await UserController.fetchAll()
-    const guestListSafe = guestList.filter(guest => guest.Table === user.table).map(guest => {
-      let safeObj = {
-        Name: guest.Name,
-        RSVP: guest.RSVP,
-        RSVPResponded: guest.RSVPResponded
-      }
-      return safeObj
-    })
+    const guestListSafe = guestList
+      .filter(guest => guest.Table === user.table)
+      .map(guest => {
+        let safeObj = {
+          Name: guest.Name,
+          RSVP: guest.RSVP,
+          RSVPResponded: guest.RSVPResponded
+        }
+        return safeObj
+      })
     res.render("guests", {
       guests: guestListSafe
     })

@@ -42,6 +42,23 @@ module.exports = {
       console.error(e)
     }
   },
+  
+  getUserById(id) {
+    return new Promise((resolve, reject) => {
+      try {
+        base('Users').find(id, function(err, record) {
+          if (err) {
+            reject(err)
+          } else {
+            const returnVal = Object.assign(record.fields, { _id: record.id})
+            resolve(returnVal)
+          }
+        })
+      } catch (e) {
+        reject(e)
+      }
+    })
+  },
 
   getUserByEmail(email) {
     try {
