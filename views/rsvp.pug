@@ -1,11 +1,11 @@
 include includes/head.pug
-  section
+main(class="container p-12 flex-1")
   if yes
-    h2 #{great}
+    h2.text-4xl.mb-3 #{great}
     p #{lookingForward}
 
   else
-    h2 #{sorryToHear}
+    h2.text-4xl.mb-3 #{sorryToHear}
     p #{shameCantCome}
 
 include includes/footer.pug

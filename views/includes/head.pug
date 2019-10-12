@@ -8,5 +8,5 @@ html(class="h-full")
     link(rel='stylesheet' href='/style.css')
     link(rel='stylesheet' href='https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css')
     title #{appName}
-  body(class="text-gray-900 antialiased leading-tight flex flex-col h-full font-sans font-thin")
+  body(class="text-gray-900 antialiased leading-tight flex flex-col h-full font-sans font-thin" style=`background: linear-gradient(140deg, white, 80%, transparent), url(${env.bgImage}); background-size: cover`)
     include header.pug

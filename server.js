@@ -88,8 +88,10 @@ app.locals.env = {
   name1: process.env.NAME_1,
   name2: process.env.NAME_2,
   weddingDate: process.env.WEDDING_DATE,
-  bg: `bg-${process.env.PRIMARY_COLOUR}-500 text-white`,
-  colour: process.env.PRIMARY_COLOUR
+  bg: `bg-${process.env.PRIMARY_COLOUR}-${process.env.PRIMARY_SAT} text-white`,
+  bgImage: `${process.env.BG_IMAGE}`,
+  colour: process.env.PRIMARY_COLOUR,
+  sat: process.env.PRIMARY_SAT,
 }
 
 app.set("view engine", "pug")
@@ -165,6 +167,20 @@ app.get("/send-token", async (req, res) => {
   }
 })
 
+app.get("/rsvp", async (req, res) => {
+  try {
+    const user = req.session.user
+    res.render("rsvp", {
+      yes: user.RSVP
+    })
+  } catch (e) {
+    console.error(e)
+    res.render("error", {
+      error: e
+    })
+  }
+})
+
 app.post("/rsvp", upload.none(), async (req, res) => {
   try {
     const rsvpsToProcess = req.body
@@ -175,17 +191,18 @@ app.post("/rsvp", upload.none(), async (req, res) => {
       const response = rsvpsToProcess[id]
       if (response === "rsvp-yes") {
         await UserController.setRsvp(rsvp, true, user)
+        res.sendStatus(200)
       } else if (response === "rsvp-no") {
         await UserController.setRsvp(rsvp, false, user)
+        res.sendStatus(200)
       } else {
         throw "You can only pick yes or no for your RSVP"
+        res.sendStatus(400)
       }
     }
   } catch (e) {
     console.error(e)
-    res.render("error", {
-      error: e
-    })
+    res.sendStatus(500)
   }
 })
 
@@ -200,14 +217,27 @@ app.get("/guests", async (req, res) => {
     }
     const guestList = await UserController.fetchAll()
     const guestListSafe = guestList
-      .filter(guest => guest.Table === user.table)
+      .filter(guest => {
+        if (user.admin) {
+          return guest
+        }
+        return guest.Table === user.Table
+      })
       .map(guest => {
         let safeObj = {
           Name: guest.Name,
           RSVP: guest.RSVP,
-          RSVPResponded: guest.RSVPResponded
+          RSVPResponded: guest.RSVPResponded,
+          Table: guest.Table
         }
         return safeObj
+      })
+      .sort((a, b) => {
+        if (user.admin) {
+          return a.Table.localeCompare(b.Table)
+        } else {
+          return a.Name.localeCompare(b.Name)
+        }
       })
     res.render("guests", {
       guests: guestListSafe
