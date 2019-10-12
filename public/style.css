@@ -1,0 +1,15 @@
+body {
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: 1fr auto;
+}
+footer {
+  grid-row-start: 3;
+  grid-row-end: 4;
+}
+
+#menu-items {
+    height: auto;
+    transition: height 0.3s ease;
+    overflow: hidden;
+}

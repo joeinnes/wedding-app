@@ -1,0 +1,36 @@
+
+
+include includes/head.pug
+main(class="container p-12 flex-1")
+  section
+    if guests
+      h2.text-4xl.mb-3 #{guestList}
+      table.table-auto.border.border-collapse
+        thead
+          th.border.p-3 #{name}
+          th.border.p-3 #{RSVPQn}
+        tbody
+          each guest, index in guests
+            if index % 2 !== 0
+              tr(class="hover:bg-" + env.colour + "-100")
+                td.border.pl-6.pr-12.py-2 #{guest.Name}
+                if guest.RSVPResponded
+                  td.border.px-6.py-2 #{guest.RSVP ? coming : notComing}
+                else
+                  td.border.px-6.py-2 #{noResponse}
+            else
+              tr(class="bg-" + env.colour + "-100 hover:bg-white")
+                td.border.px-6.py-2 #{guest.Name}
+                if guest.RSVPResponded
+                  td.border.px-6.py-2 #{guest.RSVP ? coming : notComing}
+                else
+                  td.border.px-6.py-2 #{noResponse}
+    else
+      h2.text-4xl.mb-3 #{whoops}
+      p #{notHere}
+      a(href="/" class="px-3 py-2 mr-3 border border-" + env.colour + "-500 rounded hover:bg-" + env.colour + "-500 hover:text-white") #{goHome}
+
+include includes/footer.pug
+
+include includes/foot.pug
+script(src='/rsvp.js')  

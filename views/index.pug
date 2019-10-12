@@ -1,0 +1,46 @@
+include includes/head.pug
+main(class="container p-12 flex-1")
+  if user
+    h2.text-4xl.mb-3 #{hi} #{user.Name.split(" ")[0]}!
+    if user.RSVPResponded
+      section.max-w-xl
+        if user.RSVP
+          h3.text-2xl.mb-2 #{happyComing}
+          if user.Accommodation
+            p.mb-2 #{accommodationProvided}
+            p.flex.flex-initial.mb-2
+              a(href="/accommodation" class="px-3 py-2 border border-" + env.colour + "-500 rounded hover:bg-" + env.colour + "-500 hover:text-white") #{accommodation}
+
+          p.mb-2 #{checkDetails}
+
+          p.flex.flex-initial.mb-2
+            a(href="/guests" class="px-3 py-2 mr-3 border border-" + env.colour + "-500 rounded hover:bg-" + env.colour + "-500 hover:text-white") 
+              | #{whoElse}
+            a(href="/location" class="px-3 py-2 mr-3 border border-" + env.colour + "-500 rounded hover:bg-" + env.colour + "-500 hover:text-white")
+              | #{whereIs}
+            a(href="/transport" class="px-3 py-2 mr-3 border border-" + env.colour + "-500 rounded hover:bg-" + env.colour + "-500 hover:text-white")
+              | #{getThere}
+
+        else
+          p #{sorryYouCantCome}
+    else
+      p.mb-3 #{canYouJoin}
+      form
+        div(class="flex items-center mb-3")
+          input(type="radio" name="rsvp" id="rsvp-yes" class="mr-2")
+          label(for="rsvp-yes") #{canJoin}
+          
+        div(class="flex items-center mb-3")
+          input(type="radio" name="rsvp" id="rsvp-no" class="mr-2")
+          label(for="rsvp-no") #{cantJoin}
+      p.flex.flex-initial.mb-2
+      a#submit-rsvp(class="px-3 py-2 mr-3 border border-" + env.colour + "-500 rounded hover:bg-" + env.colour + "-500 hover:text-white")
+        | ${RSVP}
+
+  else
+    h2.text-4xl.mb-3 #{notLoggedIn}
+
+include includes/footer.pug
+
+include includes/foot.pug
+script(src='/rsvp.js')  

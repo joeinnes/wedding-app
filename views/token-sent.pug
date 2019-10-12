@@ -1,0 +1,11 @@
+include includes/head.pug
+main(class="container p-12 flex-1")
+  unless user
+    h2.text-4xl.mb-3 #{checkEmails}
+    p #{linkSent}
+  else
+    h2.text-4xl.mb-3 #{alreadyLoggedIn}
+
+include includes/footer.pug
+
+include includes/foot.pug
