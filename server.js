@@ -64,6 +64,7 @@ app.use(async function(req, res, next) {
 app.use(async function(req, res, next) {
   if (!req.session.user) {
     next()
+    return
   }
   const userId = req.session.user._id
   const user = await UserController.getUserById(userId)

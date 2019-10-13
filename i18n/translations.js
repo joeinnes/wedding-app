@@ -1,3 +1,7 @@
+const date = new Date(process.env.WEDDING_DATE)
+const date_en = date.toLocaleDateString("en-GB", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+const date_hu = date.toLocaleDateString("hu-HU", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+
 module.exports = {
   "en": {
     "accommodation": "Accommodation",
@@ -9,7 +13,7 @@ module.exports = {
     "browserCopy": "You can also copy and paste this link in your browser's url bar.",
     "canJoin": "Can come",
     "cantJoin": "Can't come",
-    "canYouJoin": `Please let us know if you're going to be able to join us on our special date, ${new Date(process.env.WEDDING_DATE).toLocaleDateString({ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}!`,
+    "canYouJoin": `Please let us know if you're going to be able to join us on our special date, ${date_en}!`,
     "checkDetails": "Why don't you check out a few details about the wedding?",
     "checkEmails": "Check your emails",
     "coming": "Coming",
@@ -35,6 +39,8 @@ module.exports = {
     "orScan": "... or scan a QR code",
     "RSVP": "RSVP",
     "RSVPQn": "RSVP?",
+    "saveTheDate": "Save the date!",
+    "saveTheDateBlurb": `We'd be honoured to have you join us on ${date_en}`,
     "shameCantCome": "It's a shame you won't be able to make it, but thank you for letting us know!",
     "sorryToHear": "Sorry to hear that :(",
     "sorryYouCantCome": "Sorry you can't make it :( If you change your mind, let us know",
@@ -57,7 +63,7 @@ module.exports = {
     "browserCopy": "Ezt a linket kimásolhatod és beillesztheted a böngésző URL-sávjába is.",
     "canJoin": "Ott lesz",
     "cantJoin": "Nem tud jönni",
-    "canYouJoin": `Kérjük jelezd, ha részt tudsz venni a nagy napunkon, ${new Date(process.env.WEDDING_DATE).toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}`,
+    "canYouJoin": `Kérjük jelezd, ha részt tudsz venni a nagy napunkon, ${date_hu}`,
     "checkDetails": "Íme néhány információ az esküvővel kapcsolatban:",
     "checkEmails": "Nézd meg az e-mailedet",
     "coming": "Jön",
