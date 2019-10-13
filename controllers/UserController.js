@@ -34,6 +34,18 @@ module.exports = {
     }
   },
 
+  async setLang(user, lang) {
+    const userId = user._id
+    try {
+      const payload = {
+        Language: lang
+      }
+      const result = await helpers.updateRecord("Users", userId, payload)
+    } catch (e) {
+      console.error(e)
+    }
+  },
+  
   async setRsvp(userId, rsvp, currUser) {
     const user = await helpers.getUserById(userId)
     if (userId !== user._id && currUser["Plus Ones"].includes(userId)) {

@@ -1,104 +1,33 @@
 const date = new Date(process.env.WEDDING_DATE)
-const date_en = date.toLocaleDateString("en-GB", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
-const date_hu = date.toLocaleDateString("hu-HU", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+const huFormat = new Intl.DateTimeFormat('hu-HU', {
+  weekday: "long",
+  year: "numeric",
+  month: "long",
+  day: "numeric"
+})
+const enFormat = new Intl.DateTimeFormat('en-GB', {
+  weekday: "long",
+  year: "numeric",
+  month: "long",
+  day: "numeric"
+})
 
-module.exports = {
-  "en": {
-    "accommodation": "Accommodation",
-    "accommodationProvided": "We know you're travelling a long way, so we'd like to make sure you have somewhere to stay when you're here. Check out the link below for details on where you'll be staying.",
-    "alreadyLoggedIn": "You are already logged in.",
-    "and": "and",
-    "appName": `${process.env.NAME_1} and ${process.env.NAME_2}'s Wedding`,
-    "bestRegards": "Best regards",
-    "browserCopy": "You can also copy and paste this link in your browser's url bar.",
-    "canJoin": "Can come",
-    "cantJoin": "Can't come",
-    "canYouJoin": `Please let us know if you're going to be able to join us on our special date, ${date_en}!`,
-    "checkDetails": "Why don't you check out a few details about the wedding?",
-    "checkEmails": "Check your emails",
-    "coming": "Coming",
-    "enterEmail": "Enter email address",
-    "getThere": "How do I get there?",
-    "goHome": "Go home.",
-    "great": "Great!",
-    "guestList": "My Table",
-    "happyComing": "We're really happy you're coming!",
-    "hereIsCode": "Here's your code",
-    "hi": "Hi",
-    "linkForLogIn": `Here is your link for quickly signing into ${process.env.NAME_1} and ${process.env.NAME_2}'s Wedding`,
-    "linkSent": "A link has been sent to you with instructions on logging in to the website",
-    "location": "Location",
-    "logIn": "Log in",
-    "logOut": "Log out",
-    "lookingForward": "We're looking forward to seeing you for our special day!",
-    "name": "Name",
-    "noResponse": "No response yet",
-    "notComing": "Not coming",
-    "notHere": "You shouldn't be here",
-    "notLoggedIn": "You are not logged in",
-    "orScan": "... or scan a QR code",
-    "RSVP": "RSVP",
-    "RSVPQn": "RSVP?",
-    "saveTheDate": "Save the date!",
-    "saveTheDateBlurb": `We'd be honoured to have you join us on ${date_en}`,
-    "shameCantCome": "It's a shame you won't be able to make it, but thank you for letting us know!",
-    "sorryToHear": "Sorry to hear that :(",
-    "sorryYouCantCome": "Sorry you can't make it :( If you change your mind, let us know",
-    "submit": "Submit",
-    "table": "Table",
-    "transport": "Transport",
-    "whereIs": "Where is the wedding?",
-    "whoElse": "Who is sitting at my table?",
-    "whoops": "Whoops...",
-    "withLove": `With ❤️ from ${process.env.NAME_1} and ${process.env.NAME_2}!`,
-    "yourTable": "Your table is"
-  },
-  "hu": {
-    "accommodation": "Szállás",
-    "accommodationProvided": "Tudjuk, hogy hosszú utad lesz, ezért szeretnénk biztosítani a szállást. Az alábbi linket találsz a szállásról bővebb információt.",
-    "alreadyLoggedIn": "Már be vagy jelentkezve.",
-    "and": "és",
-    "appName": `${process.env.NAME_1} és ${process.env.NAME_2} Esküvői`,
-    "bestRegards": "Üdvözlettel",
-    "browserCopy": "Ezt a linket kimásolhatod és beillesztheted a böngésző URL-sávjába is.",
-    "canJoin": "Ott lesz",
-    "cantJoin": "Nem tud jönni",
-    "canYouJoin": `Kérjük jelezd, ha részt tudsz venni a nagy napunkon, ${date_hu}`,
-    "checkDetails": "Íme néhány információ az esküvővel kapcsolatban:",
-    "checkEmails": "Nézd meg az e-mailedet",
-    "coming": "Jön",
-    "enterEmail": "Írd be az email címed",
-    "getThere": "Hogy jutok oda?",
-    "goHome": "Főoldal",
-    "great": "Nagyszerű!",
-    "guestList": "Az én asztalom",
-    "happyComing": "Nagyon boldogok vagyunk hogy jössz!",
-    "hereIsCode": "Itt a kódod",
-    "hi": "Szia",
-    "linkForLogIn": `Az alábbi linken éred el ${process.env.NAME_1} és ${process.env.NAME_2} esküvői oldalát`,
-    "linkSent": "Elküldtünk egy linket, amivel be tudsz lépni",
-    "location": "Helyszín",
-    "logIn": "Belépés",
-    "logOut": "Kijelentkezés",
-    "lookingForward": "Örülünk, hogy ott leszel a mi nagy napunkon!",
-    "name": "Név",
-    "noResponse": "Még nem válaszolt",
-    "notComing": "Nem jön",
-    "notHere": "Nem kellene itt lennie...",
-    "notLoggedIn": "Nem vagy bejelentkezve",
-    "orScan": "vagy szkenneld be a QR kódot",
-    "RSVP": "RSVP",
-    "RSVPQn": "RSVP?",
-    "shameCantCome": "Kár, hogy nem tudsz jönni, de köszönjük, hogy előre szóltál.",
-    "sorryToHear": "Sajnáljuk :(",
-    "sorryYouCantCome": "Sajnáljuk, hogy nem tudsz jönni, ha változás van, szólj!",
-    "submit": "Beküldés",
-    "table": "Asztal",
-    "transport": "Útvonaltervezés",
-    "whereIs": "Hol lesz az esküvő?",
-    "whoElse": "Kivel ülök egy asztalnál?",
-    "whoops": "Hoppá...",
-    "withLove": `Szeretettel ${process.env.NAME_1} és ${process.env.NAME_2} ❤️`,
-    "yourTable": "A te asztalad lesz"
+const date_en = enFormat.format(date)
+const date_hu = huFormat.format(date)
+
+const fs = require('fs')
+const rawData = fs.readFileSync(__dirname + '/rawData.json', 'utf-8')
+
+module.exports = JSON.parse(rawData, function(key, value) {
+  try {
+    if (value.indexOf("${") > -1) {
+      // Yes, eval is evil, but honestly, the spreadsheet with the translations is not open to user input,
+      // and this is the best way to keep it maintainable without all translations being stored in a DB
+      // which would be complicated and slow
+      return eval('`' + value + '`')
+    }
+    return value
+  } catch (e) {
+    return value
   }
-}
+})

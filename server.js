@@ -92,7 +92,7 @@ app.locals.env = {
   bg: `bg-${process.env.PRIMARY_COLOUR}-${process.env.PRIMARY_SAT} text-white`,
   bgImage: `${process.env.BG_IMAGE}`,
   colour: process.env.PRIMARY_COLOUR,
-  sat: process.env.PRIMARY_SAT,
+  sat: process.env.PRIMARY_SAT
 }
 
 app.set("view engine", "pug")
@@ -247,6 +247,19 @@ app.get("/guests", async (req, res) => {
     res.render("error", {
       error: e
     })
+  }
+})
+
+app.get("/set-lang/:lang", async function(req, res) {
+  try {
+    const lang = req.params.lang
+    console.log(lang)
+    const user = req.session.user
+    await UserController.setLang(user, lang)
+    res.redirect("/")
+  } catch (e) {
+    console.error(e)
+    res.sendStatus(500)
   }
 })
 
