@@ -1,0 +1,45 @@
+include includes/head.pug
+main(class="container p-12 flex-1")
+  section
+    if guests
+      h2.text-4xl.mb-3 #{guestList}
+      if user.admin
+        h2.text-4xl.mb-3 #{guestListFull}
+      p.mb-3 #{yourTable} 
+        span(class="inline-block bg-" + env.colour + "-" + env.sat + " rounded-full px-3 py-1 text-sm font-semibold text-gray-200 mr-2") #{user.Table}
+
+      table.table-auto.border.border-collapse
+        thead
+          th.border.p-3 #{name}
+          th.border.p-3 #{RSVPQn}
+          if user.admin
+            th.border.p-3 #{table}
+        tbody
+          each guest, index in guests
+            if index % 2 !== 0
+              tr(class="hover:bg-" + env.colour + "-100")
+                td.border.pl-6.pr-12.py-2 #{guest.Name}
+                if guest.RSVPResponded
+                  td.border.px-6.py-2 #{guest.RSVP ? coming : notComing}
+                else
+                  td.border.px-6.py-2 #{noResponse}
+                if user.admin
+                  td.border.px-6.py-2 #{guest.Table}
+            else
+              tr(class="bg-" + env.colour + "-100 hover:bg-white")
+                td.border.px-6.py-2 #{guest.Name}
+                if guest.RSVPResponded
+                  td.border.px-6.py-2 #{guest.RSVP ? coming : notComing}
+                else
+                  td.border.px-6.py-2 #{noResponse}
+                if user.admin
+                  td.border.px-6.py-2 #{guest.Table}
+    else
+      h2.text-4xl.mb-3 #{whoops}
+      p #{notHere}
+      a(href="/" class="px-3 py-2 mr-3 border border-" + env.colour + "-" + env.sat + " rounded hover:bg-" + env.colour + "-" + env.sat + " hover:text-white") #{goHome}
+
+include includes/footer.pug
+
+include includes/foot.pug
+script(src='/rsvp.js')  

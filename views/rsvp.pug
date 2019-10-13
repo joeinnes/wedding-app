@@ -1,0 +1,13 @@
+include includes/head.pug
+main(class="container p-12 flex-1")
+  if yes
+    h2.text-4xl.mb-3 #{great}
+    p #{lookingForward}
+
+  else
+    h2.text-4xl.mb-3 #{sorryToHear}
+    p #{shameCantCome}
+
+include includes/footer.pug
+
+include includes/foot.pug
