@@ -30,6 +30,8 @@
     "lookingForward": "We're looking forward to seeing you for our special day!",
     "name": "Name",
     "noResponse": "No response yet",
+    "noSuchUser": "Hmm, that email address doesn't seem to be registered. Best to check with ${process.env.NAME_1} or ${process.env.NAME_2} whether they've updated your email address properly in the system.",
+    "notAuthorised": "You are not authorised to set an RSVP for this user.",
     "notComing": "Not coming",
     "notHere": "You shouldn't be here",
     "notLoggedIn": "You are not logged in",
