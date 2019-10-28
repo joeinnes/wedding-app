@@ -1,14 +1,15 @@
 include includes/head.pug
-main(class="container p-12 flex-1")
-  section
-    if error
-      h2.text-4xl.mb-3 #{whoops}
-      p #{error}
-    else
-      h2.text-4xl.mb-3 #{notHere}
-      a(href="/" class="px-3 py-2 mr-3 border border-" + env.colour + "-500 rounded hover:bg-" + env.colour + "-500 hover:text-white") #{goHome}
+main.site-content
+  section.container
+    .columns
+      .column.is-8
+        section.card.is-light
+          .card-content
+            if error
+              h2.title.is-size-2 #{whoops}
+              p #{error}
+            else
+              h2.title.is-size-2 #{notHere}
+                a.button.is-primary(href="/") #{goHome}
 
 include includes/footer.pug
-
-include includes/foot.pug
-script(src='/rsvp.js')  

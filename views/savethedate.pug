@@ -1,11 +1,51 @@
-include includes/head.pug
-main(class="container p-12 flex-1")
-  unless user
-    h2.text-4xl.mb-3 #{saveTheDate}
-    p #{saveTheDateBlurb}
-    textbox#address(class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-4")
-    a#submitaddress(class="px-3 py-2 border border-" + env.colour + "-" + env.sat + " rounded hover:bg-" + env.colour + "-" + env.sat + " hover:text-white") #{submit}
+include includes/head
 
-include includes/footer.pug
-include includes/foot.pug
-script(src='/savethedate.js')
+main.site-content
+  section.container
+    .columns
+      .column.is-8
+        section.card.is-light
+          .card-content
+            h1.title
+              | #{hi}!
+            p #{saveTheDateBlurb}
+            section.hero
+              .hero-body.has-text-centered
+                h1.title.brand-font.is-size-1
+                  | #{env.name1} & #{env.name2}
+                h1.subtitle.brand-font.is-size-3
+                  | 2021.08.14
+                
+            form#address-form
+              .field
+                label.label #{address1}
+                  .control
+                    input.input#address1(type="text" name="address1" placeholder="Nyáry Pál utca 9")
+              .columns
+                .field.column.is-marginless
+                  label.label #{address2}
+                    .control
+                      input.input#address2(type="text" name="address2" placeholder="Budapest")
+                .field.column.is-marginless
+                  label.label #{address3}
+                    .control
+                      input.input#address3(type="text" name="address3" placeholder="Budapest")
+              .columns
+                .field.column.is-marginless
+                  label.label #{address4}
+                    .control
+                      input.input#address4(type="text" name="address4" placeholder="1056")
+                .field.column.is-marginless
+                  label.label #{address5}
+                    .control
+                      input.input#address5(type="text" name="address5"  placeholder="Magyarország")
+              .columns
+                .fiel
+                input(id="email" type="hidden" value=user.Email name="email")
+              button.button.is-primary#submit-save-the-date Submit
+
+        .column
+
+include includes/footer
+
+script(src="/save-the-date.js")

@@ -1,56 +1,68 @@
 include includes/head.pug
 
-main(class="container p-12 flex-1")
-  if user
-    - const rsvpList = [user].concat(user.plusOnes).filter(valid => valid)
-    h2.text-4xl.mb-3.font-extrabold #{hi} #{user.Name.split(" ")[0]}!
-    if user.RSVPResponded
-      section.max-w-xl
-        if user.RSVP
-          h3.text-2xl.mb-2 #{happyComing}
-          if user.Accommodation
-            p.mb-2 #{accommodationProvided}
-            p.flex.flex-initial.mb-2
-              a(href="/accommodation" class="px-3 py-2 border border-" + env.colour + "-" + env.sat + " rounded hover:bg-" + env.colour + "-" + env.sat + " hover:text-white") 
-                | #{accommodation}
+main.site-content
+  section.container
+    .columns
+      .column.is-8
+        section.card.is-light
+          .card-content
+            if user
+              - const rsvpList = [user].concat(user.plusOnes).filter(valid => valid)
+              h1.title.is-size-2 #{hi} #{user.Name.split(" ")[0]}!
+              if user.RSVPResponded
+                  section
+                    if user.RSVP
+                      .subtitle #{happyComing}
+                      if user.Accommodation
+                        p #{accommodationProvided}
+                      
+                      br
+                      
+                      p #{checkDetails}
+                      
+                      br
+                      
+                      nav.level
+                        if user.Accommodation
+                          .level-item
+                            a.button.is-outlined.is-primary(href="/accommodation")
+                              | #{accommodation}
+                        .level-item
+                          a.button.is-outlined.is-primary(href="/location")
+                            | #{whereIs}
+                        .level-item
+                          a.button.is-outlined.is-primary(href="/transport")
+                            | #{getThere}
+                      
+                      br
+                      
+                    else
+                      p #{sorryYouCantCome}
 
-          p.mb-2 #{checkDetails}
+              p #{canYouJoin}
+              
+              br
+              
+              form.columns#rsvp-form
+                each guest,index in rsvpList
+                  .column
+                    h3.is-size-5 #{guest.Name}
+                    .control
+                      label.radio
+                        input(type="radio" name=guest._id value="rsvp-yes" class="mr-2" checked=guest.RSVP)
+                        |  #{canJoin}
 
-          p.flex.flex-initial.mb-2
-            a(href="/guests" class="mr-4 px-3 py-2 border border-" + env.colour + "-" + env.sat + " rounded hover:bg-" + env.colour + "-" + env.sat + " hover:text-white") 
-              | #{whoElse}
-            a(href="/location" class="mr-4 px-3 py-2 border border-" + env.colour + "-" + env.sat + " rounded hover:bg-" + env.colour + "-" + env.sat + " hover:text-white")
-              | #{whereIs}
-            a(href="/transport" class="mr-4 px-3 py-2 border border-" + env.colour + "-" + env.sat + " rounded hover:bg-" + env.colour + "-" + env.sat + " hover:text-white")
-              | #{getThere}
+                    .control
+                      label.radio
+                        input(type="radio" name=guest._id value="rsvp-no" class="mr-2" checked=guest.RSVPResponded && !guest.RSVP)
+                        |  #{cantJoin}
 
-        else
-          p #{sorryYouCantCome}
-          
-    p.mb-3 #{canYouJoin}
-    form#rsvp-form.flex
-      each guest,index in rsvpList
-        div(class=`${index + 1 === rsvpList.length ? "" : "border-r"} px-4`)
-          p.font-extrabold.mb-2.uppercase #{guest.Name}
-          div(class="flex items-center mb-3")
-            label
-              input(type="radio" name=guest._id value="rsvp-yes" class="mr-2" checked=guest.RSVP)
-              | #{canJoin}
+              a#submit-rsvp.button.is-primary
+                | #{RSVP}
 
-          div(class="flex items-center mb-3")
-            label
-              input(type="radio" name=guest._id value="rsvp-no" class="mr-2" checked=guest.RSVPResponded && !guest.RSVP)
-              | #{cantJoin}
-          
-    
-    p.flex.flex-initial.mb-2
-    a#submit-rsvp(class="px-3 py-2 border border-" + env.colour + "-" + env.sat + " rounded hover:bg-" + env.colour + "-" + env.sat + " hover:text-white")
-      | #{RSVP}
-
-  else
-    h2.text-4xl.mb-3 #{notLoggedIn}
+            else
+              h2.title.is-size-3 #{notLoggedIn}
 
 include includes/footer.pug
 
-include includes/foot.pug
 script(src='/rsvp.js') 

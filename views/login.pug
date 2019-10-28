@@ -1,14 +1,21 @@
 include includes/head.pug
-main(class="container p-12 flex-1")
-  unless user
-    h2.text-4xl.mb-3 #{enterEmail}
-    input#email(type="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-4")
-    a#submitlogin(class="px-3 py-2 border border-" + env.colour + "-" + env.sat + " rounded hover:bg-" + env.colour + "-" + env.sat + " hover:text-white") #{submit}
-    a#scancode(class="px-3 py-2 border border-" + env.colour + "-" + env.sat + " rounded hover:bg-" + env.colour + "-" + env.sat + " hover:text-white") #{orScan}
-  else
-    h2.text-4xl.mb-3 #{alreadyLoggedIn}
+main.site-content
+  section.container
+    .columns
+      .column.is-8
+        section.card.is-light
+          .card-content
+            unless user
+              h2.title.is-size-2 #{enterEmail}
+              input.input#email(type="email")
+              br
+              br
+              .buttons
+                a.button.is-primary#submitlogin #{submit}
+                a.button#scancode #{orScan}
+            else
+              h2.title.is-size-2 #{alreadyLoggedIn}
 
 include includes/footer.pug
-include includes/foot.pug
 script(src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js")
 script(src='/login.js')

@@ -1,27 +1,24 @@
-Welcome to Glitch
-=================
+# Wedding App
 
-Click `Show` in the header to see your app live. Updates to your code will instantly deploy and update live.
+Clone this repo, and you're a quick `npm install` away from having your own version of this wedding app.
 
-**Glitch** is the friendly community where you'll build the app of your dreams. Glitch lets you instantly create, remix, edit, and host an app, bot or site, and you can invite collaborators or helpers to simultaneously edit code with you.
+# Config Details
+You should create a .env file with the following:
 
-Find out more [about Glitch](https://glitch.com/about).
-
-
-Your Project
-------------
-
-On the front-end,
-- edit `public/client.js`, `public/style.css` and `views/index.html`
-- drag in `assets`, like images or music, to add them to your project
-
-On the back-end,
-- your app starts at `server.js`
-- add frameworks and packages in `package.json`
-- safely store app secrets in `.env` (nobody can see this but you and people you invite)
-
-
-Made by [Glitch](https://glitch.com/)
--------------------
-
-\ ゜o゜)ノ
+    NAME_1=<First name to display>
+    NAME_2=<Second name to display>
+    PRIMARY_COLOUR=<Tailwind colour>
+    PRIMARY_SAT=<Tailwind colour variation>
+    BG_IMAGE=<url of an image for the background>
+    WEDDING_DATE=<date in form YYYY-MM-DD>
+    SECRET=<A secret word, used to encrypt tokens, sessions, etc.>
+    AIRTABLE_API_KEY=<Airtable API key>
+    AIRTABLE_BASE_ID=<Airtable Base ID>
+    BASEURL=<URL where the app will run>
+    FROM_EMAIL=<smtp login>
+    FROM_PASS=<smtp password>
+    SMTP_HOST=<smtp host>
+    SMTP_PORT=<smtp port>
+    
+    NODE_ICU_DATA=node_modules/full-icu
+    
