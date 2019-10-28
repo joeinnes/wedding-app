@@ -1,0 +1,25 @@
+include includes/head
+
+main.site-content
+  section.container
+    .columns
+      .column.is-8
+        section.card.is-light
+          .card-content
+            h1.title.is-size-2 #{travelByCar}
+            p #{travelByCarBlurb}
+            br
+            a.button.is-primary(href="https://www.google.com/maps/dir//''/@47.5399487,18.8673203,12z/data=!4m9!4m8!1m0!1m5!1m1!1s0x4741d8a8537d33bd:0xf1f05ac128d0dd2c!2m2!1d18.93736!2d47.53997!3e3")
+              | #{navigateButton}
+            br
+            br
+            
+            h1.title.is-size-2 #{travelByPublicTransport}
+            p #{travelByPublicTransportBlurb}
+            br
+            br
+            
+            h1.title.is-size-2 #{travelFromAirport}
+            p #{travelFromAirportBlurb}
+            
+include includes/footer.pug

@@ -1,9 +1,11 @@
 include includes/head.pug
-main(class="container p-12 flex-1")
-  h2.text-4xl.mb-3 #{hereIsCode}
-  div#qrcode
-        
+main.site-content
+  section.container
+    .columns
+      .column.is-8
+        section.card.is-light
+          .card-content
+            h2.title.is-size-2 #{hereIsCode}
+            img(src=`/qrcodeimg/${query.code}`)
+
 include includes/footer.pug
-include includes/foot.pug
-script(src='https://cdn.jsdelivr.net/gh/kazuhikoarase/qrcode-generator/js/qrcode.js')
-script(src='/qr.js')  

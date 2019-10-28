@@ -24,10 +24,17 @@ exports.GetUserById = async function(id) {
 }
 
 exports.SetLang = async function(req, res) {
+  req.session.lang = req.params.lang
+  console.log('Set lang ' + req.session.lang)
+  
   const lang = req.params.lang
-  const user = req.session.user
-  const userId = user._id
   try {
+    const user = req.session.user
+    if (!user) {
+      res.redirect("/")
+      return
+    }
+    const userId = user._id
     const payload = {
       Language: lang
     }
@@ -172,4 +179,28 @@ exports.PopulatePlusOnes = async function(user) {
     })
   )
   return user
+}
+
+
+exports.UpdateAddress = async function(req, res) {
+  try {
+    const user = req.session.user
+    const userId = user._id
+    const addressDetails = req.body
+    if (addressDetails.email !== user.Email) {
+      throw "Can't update user!"
+    }
+    const payload = {
+      Address1: req.body.address1,
+      Address2: req.body.address2,
+      Address3: req.body.address3,
+      Address4: req.body.address4,
+      Address5: req.body.address5
+    }
+    return await helpers.updateRecord("Users", userId, payload)
+    res.sendStatus(200)
+  } catch (e) {
+    console.error(e)
+    res.sendStatus(500)
+  }
 }

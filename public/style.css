@@ -2,7 +2,10 @@ body {
   min-height: 100%;
   display: grid;
   grid-template-rows: 1fr auto;
+  font-family: 'Josefin Sans';
 }
+
+/* Marcellus SC, Dancing Script */
 
 footer {
   grid-row-start: 2;
@@ -13,4 +16,8 @@ footer {
   height: auto;
   transition: height 0.3s ease;
   overflow: hidden;
+}
+
+.custom-font {
+  font-family: 'Great Vibes';
 }

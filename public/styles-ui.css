@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css?family=Great+Vibes&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Slabo+13px&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap');
+
+nav.navbar, footer.footer {
+  background-image: url("https://cdn.glitch.com/15f85ab0-bc01-4279-a4ae-2a6a28afa911%2Fmockup-photos-5nUNdLueQio-unsplash.jpg?v=1571512544645");
+  background-size: 100%;
+  color: #ffffff;
+}
+
+.navbar-item {
+  color: #ffffff;
+}
+
+.navbar-menu {
+  background: transparent;
+}
+
+@keyframes showNav {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+.is-active {
+  display: block;
+  animation: showNav 250ms ease-in both;
+}
+
+body {
+  font-family: 'Slabo 13px';
+  min-height: 100vh;
+  line-height: 2.0em;
+}
+
+.navbar-brand, .brand-font {
+  font-family: 'Great Vibes';
+  font-size: 2em;
+}
+
+.site {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.site-content {
+  flex: 1;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+}
+
+footer.footer {
+  padding: 1rem;
+}
+
+.border-r {
+  border: 0px 1px 0px 0px solid black;
+}

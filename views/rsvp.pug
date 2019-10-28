@@ -1,13 +1,16 @@
 include includes/head.pug
-main(class="container p-12 flex-1")
-  if user.RSVP
-    h2.text-4xl.mb-3 #{great}
-    p #{lookingForward}
+main.site-content
+  section.container
+    .columns
+      .column.is-8
+        section.card.is-light
+          .card-content
+            if user.RSVP
+              h2.title.is-size-2 #{great}
+              p #{lookingForward}
 
-  else
-    h2.text-4xl.mb-3 #{sorryToHear}
-    p #{shameCantCome}
+            else
+              h2.title.is-size-2 #{sorryToHear}
+              p #{shameCantCome}
 
 include includes/footer.pug
-
-include includes/foot.pug
