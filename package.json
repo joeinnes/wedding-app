@@ -10,7 +10,7 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "airtable": "^0.7.0",
+    "airtable": "^0.7.2",
     "body-parser": "^1.19.0",
     "connect": "^3.7.0",
     "connect-sqlite3": "^0.9.11",
